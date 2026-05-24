@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>分析结果 - 高三错题助手</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>卷子分析结果</h1>
+
+        <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
+            <p><strong>学科：</strong>{{ submission.subject }}</p>
+            <p><strong>提交时间：</strong>{{ submission.submit_time.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+            <p><strong>总题数：</strong>{{ questions|length }} 道</p>
+            <p><strong>正确率：</strong>{{ questions|selectattr('is_correct')|list|length }}/{{ questions|length }} ({{ (questions|selectattr('is_correct')|list|length / questions|length * 100)|round(1) }}%)</p>
+        </div>
+
+        <h2>题目详情</h2>
+        {% for question in questions %}
+        <div class="question {{ 'correct' if question.is_correct else 'incorrect' }}">
+            <div class="question-header">
+                第{{ loop.index }}题 ({{ question.difficulty }})
+                {% if question.is_correct %}
+                <span style="color: #27ae60; margin-left: 10px;">✓ 正确</span>
+                {% else %}
+                <span style="color: #e74c3c; margin-left: 10px;">✗ 错误</span>
+                {% endif %}
+            </div>
+
+            <p><strong>题目：</strong>{{ question.question_text }}</p>
+            <p><strong>你的答案：</strong>{{ question.user_answer }}</p>
+            <p><strong>正确答案：</strong>{{ question.correct_answer }}</p>
+
+            <div class="knowledge-points">
+                <strong>📌 涉及知识点：</strong>{{ question.knowledge_points }}
+            </div>
+
+            {% if not question.is_correct %}
+            <div class="explanation">
+                <strong>💡 详细解析：</strong>{{ question.explanation }}
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="{{ url_for('upload') }}" class="btn">继续上传下一张</a>
+            <a href="{{ url_for('index') }}" class="btn" style="margin-left: 15px; background-color: #95a5a6;">返回首页</a>
+        </div>
+    </div>
+</body>
+</html>

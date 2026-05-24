@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高三错题智能助手</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 高三错题智能助手</h1>
+
+        <div style="text-align: center; margin: 40px 0; padding: 20px; border-radius: 8px; background-color: {% if has_submitted_today %}#e8f8f5{% else %}#fef9e7{% endif %};">
+            {% if has_submitted_today %}
+            <p style="color: #27ae60; font-size: 20px; font-weight: 500;">✓ 你今天已经提交过卷子了，真棒！继续保持！</p>
+            {% else %}
+            <p style="color: #f39c12; font-size: 20px; font-weight: 500;">⚠️ 你今天还没有提交卷子</p>
+            {% endif %}
+        </div>
+
+        <div class="button-group">
+            <a href="{{ url_for('upload') }}" class="btn">📤 上传今天的卷子</a>
+            <a href="{{ url_for('history') }}" class="btn">📜 查看历史记录</a>
+            <a href="{{ url_for('mistakes') }}" class="btn">❌ 我的错题本</a>
+            <a href="{{ url_for('reports') }}" class="btn">📊 每周报告</a>
+        </div>
+
+        <div style="text-align: center; color: #7f8c8d; margin-top: 50px; padding-top: 30px; border-top: 1px solid #eee;">
+            <p>每天坚持上传卷子，AI帮你自动分析错题，总结知识点</p>
+            <p>祝你高考顺利，金榜题名！🎓</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>历史记录 - 高三错题助手</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>提交历史记录</h1>
+
+        {% if submissions %}
+            {% for submission in submissions %}
+            <div class="submission-item">
+                <div class="submission-info">
+                    <div class="submission-subject">{{ submission.subject }}</div>
+                    <div class="submission-time">提交时间：{{ submission.submit_time.strftime('%Y-%m-%d %H:%M:%S') }}</div>
+                </div>
+                <a href="{{ url_for('result', submission_id=submission.id) }}" class="btn">查看详情</a>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p style="text-align: center; color: #7f8c8d; margin-top: 40px;">还没有提交过任何卷子</p>
+        {% endif %}
+
+        <a href="{{ url_for('index') }}" class="back-link">← 返回首页</a>
+    </div>
+</body>
+</html>

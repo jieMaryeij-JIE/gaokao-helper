@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的错题本 - 高三错题助手</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>我的错题本</h1>
+
+        {% if mistakes_by_subject %}
+            {% for subject, mistakes in mistakes_by_subject.items() %}
+            <div class="subject-section">
+                <div class="subject-title">{{ subject }}（共{{ mistakes|length }}道错题）</div>
+
+                {% for mistake in mistakes %}
+                <div class="mistake-item">
+                    <div class="mistake-question">{{ mistake.question_text }}</div>
+
+                    <div class="mistake-answers">
+                        <p><strong>你的答案：</strong>{{ mistake.user_answer }}</p>
+                        <p><strong>正确答案：</strong>{{ mistake.correct_answer }}</p>
+                    </div>
+
+                    <div class="knowledge-points">
+                        <strong>📌 涉及知识点：</strong>{{ mistake.knowledge_points }}
+                    </div>
+
+                    <div class="explanation">
+                        <strong>💡 详细解析：</strong>{{ mistake.explanation }}
+                    </div>
+
+                    <p style="text-align: right; color: #7f8c8d; font-size: 12px; margin-top: 10px;">
+                        提交时间：{{ mistake.submission.submit_time.strftime('%Y-%m-%d') }}
+                    </p>
+                </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        {% else %}
+            <div style="text-align: center; margin-top: 60px; padding: 40px; background-color: #e8f8f5; border-radius: 8px;">
+                <p style="color: #27ae60; font-size: 20px; font-weight: 500;">🎉 太棒了！你还没有任何错题</p>
+                <p style="color: #7f8c8d; margin-top: 10px;">继续保持，加油！</p>
+            </div>
+        {% endif %}
+
+        <a href="{{ url_for('index') }}" class="back-link">← 返回首页</a>
+    </div>
+</body>
+</html>

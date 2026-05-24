@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>每周报告 - 高三错题助手</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>每周学习报告</h1>
+
+        <div style="text-align: center; margin-bottom: 40px;">
+            <a href="{{ url_for('generate_weekly_report') }}" class="btn" style="font-size: 18px; padding: 15px 35px;">📊 生成本周学习报告</a>
+        </div>
+
+        {% if reports %}
+            {% for report in reports %}
+            <div class="report">
+                <h2>{{ report.subject }} - {{ report.start_date.strftime('%Y-%m-%d') }} 至 {{ report.end_date.strftime('%Y-%m-%d') }}</h2>
+                <p style="color: #7f8c8d; margin-bottom: 20px;">生成时间：{{ report.generate_time.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+                <div style="white-space: pre-wrap; line-height: 1.8;">{{ report.report_content }}</div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p style="text-align: center; color: #7f8c8d; margin-top: 40px;">还没有生成过任何报告，点击上方按钮生成本周报告</p>
+        {% endif %}
+
+        <a href="{{ url_for('index') }}" class="back-link">← 返回首页</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上传卷子 - 高三错题助手</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>上传今天的卷子</h1>
+
+        <div style="background-color: #e8f4fd; padding: 15px; border-radius: 6px; margin-bottom: 30px;">
+            <p style="margin: 0; color: #2980b9;"><strong>提示：</strong>请确保照片清晰，文字可辨认，最好在光线充足的地方拍摄</p>
+        </div>
+
+        <form method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="image">选择卷子照片：</label>
+                <input type="file" id="image" name="image" accept="image/*" required>
+            </div>
+            <button type="submit" class="btn" style="width: 100%;">上传并开始AI分析</button>
+        </form>
+
+        <a href="{{ url_for('index') }}" class="back-link">← 返回首页</a>
+    </div>
+</body>
+</html>
